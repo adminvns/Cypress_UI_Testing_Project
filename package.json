@@ -1,0 +1,16 @@
+{
+  "name": "shell_assignment",
+  "version": "1.0.0",
+  "description": "Automation Project for shell assignment",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Shubham Singh ",
+  "license": "ISC",
+  "dependencies": {
+    "cypress": "^13.14.2",
+    "mochawesome": "^7.1.3"
+  }
+}
