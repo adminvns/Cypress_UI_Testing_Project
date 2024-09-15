@@ -13,7 +13,7 @@ module.exports = defineConfig({
       reportDir: 'cypress/reports',
       overwrite: false,
       html: true,
-      json: false
+      json: true
     },
     setupNodeEvents(on, config) {
     },
