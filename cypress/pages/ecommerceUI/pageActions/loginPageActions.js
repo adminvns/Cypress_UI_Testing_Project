@@ -7,6 +7,8 @@ class LoginActions {
 
   visit() {
     cy.visit('/');
+    this.loginPage.loginLink().click()
+    cy.wait(1000)//manual wait for 1 seconds as the dynamic wait not working here
   }
 
   login(username, password) {
@@ -18,6 +20,10 @@ class LoginActions {
   verifyErrorMessage(expectedMessage) {
     this.loginPage.errorMessage().should('be.visible')
       .and('contain', expectedMessage);
+  }
+
+  verifyUserLogin(user){
+    this.loginPage.userLogin().contains(user)
   }
 }
 

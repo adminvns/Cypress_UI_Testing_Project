@@ -8,15 +8,23 @@ class productPageActions {
   }
 
   searchProductByName(name) {
-    this.productPage.inventoryList().contains(name)
+    this.productPage.inventoryList().contains(name).click()
   }
 
   verifyProductInList(productName) {
     this.productPage.inventoryItemName().should('contain', productName);
   }
 
-  selectLowToHighFilter(){
-    this.productPage.productFilter().select('Price (low to high)');
+  selectCategoryPhones(){
+    this.productPage.productPhones().should('be.visible').click();
+  }
+
+  selectCategoryLaptop(){
+    this.productPage.productLaptops().should('be.visible').click();
+  }
+
+  selectCategoryMonitor(){
+    this.productPage.productMonitors().should('be.visible').click();
   }
 
   selectHighToLowFilter(){
@@ -24,9 +32,7 @@ class productPageActions {
   }
   
   logOut(){
-    this.productPage.menu().click();
     this.productPage.logoutButton().click();
-    this.loginPage.loginButton().should('be.visible');
 }
 
 addProductToCart(productName) {

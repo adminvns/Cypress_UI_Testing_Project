@@ -1,18 +1,27 @@
 class LoginPage {
+
+    loginLink(){
+      return cy.get('#login2');
+    }
+
     usernameInput() {
-      return cy.get('[data-test="username"]');
+      return cy.get('#loginusername');
     }
   
     passwordInput() {
-      return cy.get('[data-test="password"]');
+      return cy.get('#loginpassword');
     }
   
     loginButton() {
-      return cy.get('[data-test="login-button"]');
+      return cy.get('[onclick="logIn()"]');
     }
   
     errorMessage() {
       return cy.get('[data-test="error"]');
+    }
+
+    userLogin(){
+      return cy.get('#nameofuser');
     }
   }
   

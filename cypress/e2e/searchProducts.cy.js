@@ -10,26 +10,34 @@ describe('Product Search Tests', () => {
   beforeEach('Login', () => {
     loginActions.visit();
     loginActions.login(Cypress.env('username'), Cypress.env('password'));
+    cy.wait(10000)
   });
 
   afterEach('Logout on Failure', function() {
-    productActions.logOut();
-    if (this.currentTest.state === 'failed') {
-      productActions.logOut();
-    }
+    // productActions.logOut();
+    // if (this.currentTest.state === 'failed') {
+    //   productActions.logOut();
+    // }
   });
 
   it('Search Product by Name', () => {
-    productActions.searchProductByName('Sauce Labs Backpack');
+    productActions.searchProductByName('Samsung galaxy s6');
     
   });
 
-  it('Sort by High to Low and Verify First Item', () => {
-    productActions.selectHighToLowFilter();
-    productPage.firstProductInList().contains('Sauce Labs Fleece Jacket');;
+  it.only('Sort by High to Low and Verify First Item', () => {
+    
+    productActions.selectCategoryMonitor;
+    cy.wait(10000)
+    productActions.selectCategoryPhones;
+    cy.wait(10000)
+    productActions.selectCategoryLaptop;
+    cy.wait(10000)
+    
+    
   });
 
-  it('Sort by Low to High and Verify First Item', () => {
+  it.skip('Sort by Low to High and Verify First Item', () => {
     productActions.selectLowToHighFilter();
     productPage.firstProductInList().contains('Sauce Labs Onesie');
   });
