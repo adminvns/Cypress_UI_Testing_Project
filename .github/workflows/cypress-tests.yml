@@ -3,19 +3,37 @@ name: Cypress Tests
 on: [push]
 
 jobs:
-  cypress-run:
+  cypress-tests:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        containers: [1, 2]
-
+        spec: 
+          - 'cypress/e2e/addCart.cy.js'
+          - 'cypress/e2e/checkout.cy.js'
+          - 'cypress/e2e/login.cy.js'
+          - 'cypress/e2e/searchProducts.cy.js'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Install Dependencies
-        run: npm install
+        run: |
+          npm install
+          npm install mochawesome mochawesome-merge mochawesome-report-generator --save-dev
 
       - name: Run Cypress Tests
-        run: npx cypress run --browser chrome
+        uses: cypress-io/github-action@v6
+        with:
+          spec: ${{ matrix.spec }}
+          record: false
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Merge and Generate Report
+        if: ${{ always() }}
+        run: |
+          npx mochawesome-merge cypress/reports/*.json > cypress/reports/report.json
+          npx mochawesome-report-generator generate cypress/reports/report.json
+        continue-on-error: true
