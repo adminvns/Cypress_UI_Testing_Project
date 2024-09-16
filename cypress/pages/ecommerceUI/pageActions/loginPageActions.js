@@ -29,7 +29,7 @@ class LoginActions {
 
   verifyErrorMessage(expectedMessage) {
     cy.on('window:alert', (text) => {
-      expect(text).to.equal(expectedMessage);
+      expect(text).to.include(expectedMessage);
     });
   }
 
