@@ -32,3 +32,10 @@ jobs:
           npx mochawesome-merge cypress/reports/*.json -o cypress/reports/merged-report.json
           npx mochawesome-report-generator cypress/reports/merged-report.json
         continue-on-error: true
+
+      - name: Upload Reports as Artifacts
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-reports
+          path: cypress/reports/
