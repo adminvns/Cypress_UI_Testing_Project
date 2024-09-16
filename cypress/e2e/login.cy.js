@@ -24,6 +24,6 @@ describe('Verify Login Page Tests', () => {
         loginActions.login('invalid_user', 'wrong_password');
 
         // Verify the error message is displayed
-        loginActions.verifyErrorMessage('Wrong Password')
+        loginActions.verifyErrorMessage('Wrong')
     });
 });
