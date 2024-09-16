@@ -1,16 +1,21 @@
 import productPageActions from '../pages/ecommerceUI/pageActions/productPageActions';
 import LoginPageActions from '../pages/ecommerceUI/pageActions/loginPageActions';
 import CartPageActions from '../pages/ecommerceUI/pageActions/cartPageActions';
-import CheckoutInfoPageActions from '../pages/ecommerceUI/pageActions/checkoutInfoPageActions';
-import CheckoutConfirmationPageActions from '../pages/ecommerceUI/pageActions/checkoutConfirmationPageActions';
-import CheckoutCompletePageActions from '../pages/ecommerceUI/pageActions/checkoutCompletePageActions';
+import { generateRandomName, generateRandomCountry, generateRandomCity, generateRandomCardNumber, generateRandomMonth, generateRandomYear } from '../support/baseApi';
 
 const productActions = new productPageActions();
 const loginActions = new LoginPageActions();
 const cartPageActions = new CartPageActions();
-const checkoutInfoPageActions = new CheckoutInfoPageActions();
-const checkoutConfirmationPageActions = new CheckoutConfirmationPageActions();
-const checkoutCompletePageActions = new CheckoutCompletePageActions();
+
+
+const productName = 'Nokia lumia 1520';
+const productPrice = '820';
+const userName = generateRandomName();
+const userCountry = generateRandomCountry();
+const userCity = generateRandomCity();
+const cardNumber = generateRandomCardNumber();
+const cardMonth = generateRandomMonth();
+const cardYear = generateRandomYear();
 
 describe('Add Products to Cart Tests', () => {
 
@@ -26,45 +31,34 @@ describe('Add Products to Cart Tests', () => {
     }
   });
 
-  it.only('Add Product to Cart and Checkout', () => {
+  it('Add a Specific Product to Cart and Checkout', () => {
 
-    const tax = 2.40;
-    const productName = 'Sauce Labs Backpack';
-    const userFirstName = 'FirstTest';
-    const userLastName = 'LastTest';
-    const userPinCode = '00000'
-    const deliveryMethod = 'Express Delivery!'
-    const paymentInfo = 'SauceCard'
+      productActions.addProductToCart(productName);
 
-    productActions.addProductToCart(productName);
-
-    cartPageActions.verifyCartCount();
-    cartPageActions.getItemPrice().then(productPrice => {
-
-      const totalSum = productPrice + tax;
       cartPageActions.clickOnCart();
-
       cartPageActions.verifyCartTitle();
-      cartPageActions.verifyProductInCart(productName);
+      cartPageActions.verifyProductInCartPage(productName,productPrice)
       cartPageActions.proceedToCheckout();
-
-      checkoutInfoPageActions.fillCheckoutInformation(userFirstName, userLastName, userPinCode);
-      checkoutInfoPageActions.continueToCheckout();
-
-      checkoutConfirmationPageActions.verifyCheckoutTitle();
-      checkoutConfirmationPageActions.verifyProductInList(productName);
-      checkoutConfirmationPageActions.verifyPaymentInfo(paymentInfo);
-      checkoutConfirmationPageActions.verifyShippingInfo(deliveryMethod);
-      checkoutConfirmationPageActions.verifySubtotal(productPrice);
-      checkoutConfirmationPageActions.verifyTotal(totalSum);
-      checkoutConfirmationPageActions.completeCheckout();
-
-      checkoutCompletePageActions.verifyCompletionTitle();
-      checkoutCompletePageActions.verifyCompletionHeader();
-      checkoutCompletePageActions.verifyCompletionText();
-      checkoutCompletePageActions.goBackToProducts();
-    });
-
+      cartPageActions.fillCheckoutInformation(userName, userCountry, userCity, cardNumber, cardMonth, cardYear);
+      cartPageActions.clickSubmitOrder();
+      cartPageActions.verifyOrderConfirmation();
   });
 
+
+  it('Add a Random Product to Cart and Checkout', () => {
+      productActions.addRandomProductToCart();
+      cy.getProductDetails().then(() => {
+
+        //verifying the product name and product price should be same at the time of checkout as they were in the cart.
+        cy.get('@productDetails').then(({ productName, price }) => {
+          cartPageActions.clickOnCart();
+          cartPageActions.verifyCartTitle();
+          cartPageActions.verifyProductInCartPage(productName,price)
+          cartPageActions.proceedToCheckout();
+          cartPageActions.fillCheckoutInformation(userName, userCountry, userCity, cardNumber, cardMonth, cardYear);
+          cartPageActions.clickSubmitOrder();
+          cartPageActions.verifyOrderConfirmation();
+        });
+      });
+  });
 });

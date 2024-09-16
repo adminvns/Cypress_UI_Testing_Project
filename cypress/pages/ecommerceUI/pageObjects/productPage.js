@@ -18,18 +18,9 @@ class productPageObject {
     productMonitors(){
       return cy.get(`[onclick="byCat('monitor')"]`);
     }
-
-    itemPrice(){
-        return cy.get('.price-container');
-    }
-
-    firstProductInList(){
-      return cy.get(':nth-child(1) > [data-test="inventory-item-description"]')
-    }
     
-
-    logoutButton(){
-        return cy.get('#logout2');
+    productsList(){
+      return cy.get('#tbodyid .card');
     }
 
     dynamicAddToCart(){
@@ -37,7 +28,7 @@ class productPageObject {
     }
 
     AddToCart(){
-      return cy.get('.col-sm-12 > .btn');
+      return cy.get('a.btn.btn-success.btn-lg');
     
     }
 
