@@ -1,6 +1,6 @@
 class CartPage {
     title() {
-      return cy.get('[data-test="title"]');
+      return cy.get('.col-lg-8 > h2');
     }
   
     productInCart(productName) {
@@ -12,19 +12,55 @@ class CartPage {
     }
   
     checkoutButton() {
-      return cy.get('[data-test="checkout"]');
-    }
-
-    cartBadge(){
-      return cy.get('[data-test="shopping-cart-badge"]');
+      return cy.get(`[data-target='#orderModal']`);
     }
 
     cartIcon(){
-      return cy.get('[data-test="shopping-cart-link"]');
+      return cy.get('#cartur');
     }
     
     itemPrice() {
       return cy.get('[data-test="inventory-item-price"]')
+    }
+    
+    name(){
+      return cy.get('#name');
+    }
+
+    country(){
+      return cy.get('#country');
+    }
+
+    city(){
+      return cy.get('#city');
+    }
+
+    creditCard(){
+      return cy.get('#card');
+    }
+
+    month(){
+      return cy.get('#month');
+    }
+
+    year(){
+      return cy.get('#year');
+    }
+
+    submitOrder(){
+      return cy.get('[onclick="purchaseOrder()"]');
+    }
+
+    confirmation(){
+      return cy.get('.sweet-alert');
+    }
+    
+    confirmButton(){
+      return cy.get('.confirm');
+    }
+
+    productList(){
+      return cy.get('#tbodyid',{timeout:6000});
     }
     
   }

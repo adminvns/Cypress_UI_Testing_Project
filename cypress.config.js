@@ -2,18 +2,21 @@ const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
   e2e: {
-    baseUrl: 'https://www.saucedemo.com/',
+    baseUrl: 'https://demoblaze.com',
     env: {
-      username: 'standard_user',
-      password: 'secret_sauce'
+      username: 'testsammy123@gmail.com',
+      password: 'test123##'
     },
     "retries": 1,
     reporter: 'mochawesome',
     reporterOptions: {
       reportDir: 'cypress/reports',
       overwrite: false,
-      html: true,
-      json: true
+      charts: true,
+      reportPageTitle: 'index.html',
+      html: false,
+      json: true,
+      embeddedScreenshots: true,
     },
     setupNodeEvents(on, config) {
     },

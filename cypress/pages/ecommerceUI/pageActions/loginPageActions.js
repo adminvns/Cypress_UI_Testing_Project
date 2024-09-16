@@ -7,17 +7,34 @@ class LoginActions {
 
   visit() {
     cy.visit('/');
+    this.loginPage.loginLink().click()
+    cy.wait(1000)//manual wait for 1 seconds as the dynamic wait not working here.
   }
 
   login(username, password) {
-    this.loginPage.usernameInput().type(username);
-    this.loginPage.passwordInput().type(password);
-    this.loginPage.loginButton().click();
+    if(username == 'invalid_user'){
+      this.loginPage.usernameInput().type(username);
+      this.loginPage.passwordInput().type(password);
+      this.loginPage.loginButton().click();
+    }
+    else{
+      cy.intercept('**/entries').as('entriesRequest');
+      this.loginPage.usernameInput().type(username);
+      this.loginPage.passwordInput().type(password);
+      this.loginPage.loginButton().click();
+      cy.wait('@entriesRequest').its('response.statusCode').should('eq', 200);
+    }
+    
   }
 
   verifyErrorMessage(expectedMessage) {
-    this.loginPage.errorMessage().should('be.visible')
-      .and('contain', expectedMessage);
+    cy.on('window:alert', (text) => {
+      expect(text).to.equal(expectedMessage);
+    });
+  }
+
+  verifyUserLogin(user){
+    this.loginPage.userLogin().contains(user)
   }
 }
 

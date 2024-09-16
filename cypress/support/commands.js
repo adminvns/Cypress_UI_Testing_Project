@@ -1,32 +1,34 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+Cypress.Commands.add('clearAllProducts', () => {
+    cy.get('tbody#tbodyid tr').then($rows => {
+      const rowCount = $rows.length;
+      if (rowCount > 0) {
 
-// cypress/support/commands.js
-Cypress.Commands.add('logOut', () => {
-    cy.get('#react-burger-menu-btn').click();
-        cy.get('#logout_sidebar_link').click();
+        for (let i = 0; i < rowCount - 1; i++) {
+          cy.get('tbody#tbodyid tr').first().find('a').click();
+          cy.wait(2000);
+        }
+        cy.get('tbody#tbodyid tr').first().find('a').click();
+        cy.wait(3000);
+      } else {
+        cy.log('No products to delete.');
+      }
+    });
   });
   
+
+  Cypress.Commands.add('visitHome', () => {
+    cy.visit('/');
+  });
+
+  Cypress.Commands.add('getProductDetails', () => {
+    // Locate and extract the product name and price
+    cy.get('h2.name').invoke('text').then((productName) => {
+      cy.get('h3.price-container').invoke('text').then((priceText) => {
+        // Clean up the price text if needed (e.g., remove currency symbols)
+        const price = priceText.replace(/[^\d]/g, ''); // This removes non-numeric characters
+        
+        // Save both values in aliases for later use
+        cy.wrap({ productName, price }).as('productDetails');
+      });
+    });
+  });

@@ -1,30 +1,26 @@
 class productPageObject {
     inventoryList() {
-      return cy.get('.inventory_list');
+      return cy.get('#tbodyid');
     }
   
     inventoryItemName() {
       return cy.get('.inventory_item_name');
     }
 
-    productFilter(){
-      return cy.get('[data-test="product-sort-container"]');
+    productPhones(){
+      return cy.get(`[onclick="byCat('phone')"]`);
     }
 
-    itemPrice(){
-        return cy.get('[data-test="inventory-item-price"]');
+    productLaptops(){
+      return cy.get(`[onclick="byCat('notebook')"]`);
     }
 
-    firstProductInList(){
-      return cy.get(':nth-child(1) > [data-test="inventory-item-description"]')
+    productMonitors(){
+      return cy.get(`[onclick="byCat('monitor')"]`);
     }
     
-    menu(){
-      return cy.get('#react-burger-menu-btn');
-    }
-
-    logoutButton(){
-        return cy.get('#logout_sidebar_link');
+    productsList(){
+      return cy.get('#tbodyid .card');
     }
 
     dynamicAddToCart(){
@@ -32,10 +28,10 @@ class productPageObject {
     }
 
     AddToCart(){
-      return cy.get('[data-test="add-to-cart"]')
+      return cy.get('a.btn.btn-success.btn-lg');
+    
     }
 
   }
   
   export default productPageObject;
-  

@@ -8,15 +8,26 @@ class productPageActions {
   }
 
   searchProductByName(name) {
-    this.productPage.inventoryList().contains(name)
+    this.productPage.inventoryList().contains(name).click();
   }
 
   verifyProductInList(productName) {
     this.productPage.inventoryItemName().should('contain', productName);
   }
 
-  selectLowToHighFilter(){
-    this.productPage.productFilter().select('Price (low to high)');
+  selectCategoryPhones(){
+    this.productPage.productPhones().should('be.visible').click();
+    this.productPage.inventoryList().contains('phone');
+  }
+
+  selectCategoryLaptop(){
+    this.productPage.productLaptops().should('be.visible').click();
+    this.productPage.inventoryList().contains('laptop');
+  }
+
+  selectCategoryMonitor(){
+    this.productPage.productMonitors().should('be.visible').click();
+    this.productPage.inventoryList().contains('monitor');
   }
 
   selectHighToLowFilter(){
@@ -24,9 +35,10 @@ class productPageActions {
   }
   
   logOut(){
-    this.productPage.menu().click();
-    this.productPage.logoutButton().click();
-    this.loginPage.loginButton().should('be.visible');
+    cy.visit('/')
+    this.loginPage.logoutButton().click();
+    this.loginPage.navigationBar().find('#login2').should('be.visible');
+    
 }
 
 addProductToCart(productName) {
@@ -35,17 +47,13 @@ addProductToCart(productName) {
 }
 
 addRandomProductToCart() {
-  this.productPage.dynamicAddToCart().then($buttons => {
-    const count = $buttons.length;
-    cy.log('Number of "Add to cart" buttons:', count);
-    if (count > 0) {
-      const randomIndex = Math.floor(Math.random() * count);
-      cy.wrap($buttons).eq(randomIndex).click(); 
-    } else {
-      throw new Error('No Add to Cart buttons found');
-    }
+this.productPage.productsList().then((cards) => {
+  const randomIndex = Math.floor(Math.random() * cards.length);
+  cy.wrap(cards[randomIndex]).as('selectedCard');
   });
-}
+  cy.get('@selectedCard').find('a.hrefch').click();
+  this.productPage.AddToCart().click(); 
+  }
 
 }
 
