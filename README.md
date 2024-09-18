@@ -21,7 +21,7 @@ To run the tests locally, follow these steps:
    ```bash
    git clone <this repo>
    cd repo
-2. **Install Dependencies**
+2. **Install Dependencies** (Make Sure you have Node JS installed - https://nodejs.org/en/download/package-manager)
 
      ```bash
    npm install
