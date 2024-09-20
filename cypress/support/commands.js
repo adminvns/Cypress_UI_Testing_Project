@@ -1,5 +1,5 @@
 Cypress.Commands.add('clearAllProducts', () => {
-    cy.get('tbody#tbodyid tr').then($rows => {
+    cy.get('tbody#tbodyid tr',{timeout:15000}).then($rows => {
       const rowCount = $rows.length;
       if (rowCount > 0) {
 

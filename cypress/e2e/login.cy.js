@@ -3,8 +3,8 @@ import LoginActions from '../pages/ecommerceUI/pageActions/loginPageActions';
 describe('Verify Login Page Tests', () => {
 
     const loginActions = new LoginActions();
-    const username = Cypress.env('username');
-    const password = Cypress.env('password');
+    const username = Cypress.env('userName');
+    const password = Cypress.env('userPassword');
 
     beforeEach(() => {
         loginActions.visit();

@@ -1,5 +1,6 @@
 import productPageObject from '../pageObjects/productPage';
 import LoginPage from '../pageObjects/loginPage';
+const baseUrl = Cypress.env('baseUrl');
 
 class productPageActions {
   constructor() {
@@ -35,7 +36,7 @@ class productPageActions {
   }
   
   logOut(){
-    cy.visit('/')
+    cy.visit(baseUrl)
     this.loginPage.logoutButton().click();
     this.loginPage.navigationBar().find('#login2').should('be.visible');
     
@@ -43,7 +44,9 @@ class productPageActions {
 
 addProductToCart(productName) {
   cy.contains(productName).click();
-  this.productPage.AddToCart().click(); 
+  cy.intercept('**/view').as('viewRequest');
+  this.productPage.AddToCart().click();
+  cy.wait('@viewRequest').its('response.statusCode').should('eq', 200);
 }
 
 addRandomProductToCart() {

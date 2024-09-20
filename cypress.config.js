@@ -1,12 +1,8 @@
 const { defineConfig } = require("cypress");
+const { readFileSync } = require('fs')
 
 module.exports = defineConfig({
   e2e: {
-    baseUrl: 'https://demoblaze.com',
-    env: {
-      username: 'testsammy123@gmail.com',
-      password: 'test123##'
-    },
     "retries": 1,
     reporter: 'mochawesome',
     reporterOptions: {
@@ -19,6 +15,16 @@ module.exports = defineConfig({
       embeddedScreenshots: true,
     },
     setupNodeEvents(on, config) {
+      console.log(config.env)
+      const envName = config.env.name || 'dev';
+      const text = readFileSync(`environment_configs/${envName}.json`);
+      const values = JSON.parse(text);
+      config.env = {
+          "baseUrl": values.baseUrl,
+          "userName": values.userName,
+          "userPassword": values.userPassword
+      }
+      return config;
     },
   },
 });

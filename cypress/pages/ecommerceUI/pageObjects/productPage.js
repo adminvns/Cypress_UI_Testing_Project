@@ -28,7 +28,7 @@ class productPageObject {
     }
 
     AddToCart(){
-      return cy.get('a.btn.btn-success.btn-lg');
+      return cy.get('a.btn.btn-success.btn-lg',{timeout:10000});
     
     }
 

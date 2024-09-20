@@ -1,4 +1,5 @@
 import LoginPage from '../pageObjects/loginPage';
+const baseUrl = Cypress.env('baseUrl');
 
 class LoginActions {
   constructor() {
@@ -6,7 +7,7 @@ class LoginActions {
   }
 
   visit() {
-    cy.visit('/');
+    cy.visit(baseUrl);
     this.loginPage.loginLink().click()
     cy.wait(1000)//manual wait for 1 seconds as the dynamic wait not working here.
   }

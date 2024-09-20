@@ -9,7 +9,7 @@ describe('Add Products to Cart Tests', () => {
 
   beforeEach('Login', () => {
     loginActions.visit();
-    loginActions.login(Cypress.env('username'), Cypress.env('password'));
+    loginActions.login(Cypress.env('userName'), Cypress.env('userPassword'));
   });
 
   afterEach('Logout on Failure', function() {
