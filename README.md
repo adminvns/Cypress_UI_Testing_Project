@@ -3,14 +3,36 @@
 
 ## Overview
 
-This repository contains an end-to-end (E2E) test suite for testing the functionality of a E-commerce web application using Cypress. The suite includes tests for various user interactions such as adding items to the cart, checking out, and searching for products.
+This repository contains an end-to-end (E2E) test suite for testing the functionality of a E-commerce web application (https://demoblaze.com) using Cypress. The suite includes tests for various user interactions such as adding items to the cart, checking out, and searching for products.
 
 ## Table of Contents
 
-1. [Running the Tests Locally](#running-the-tests-locally)
-2. [GitHub Actions CI/CD Pipeline](#github-actions-cicd-pipeline)
-3. [Test Flow](#test-flow)
-4. [Defect Found](#defect-found)
+1. [Project Environment Setup](#project-env)
+2. [Running the Tests Locally](#running-the-tests-locally)
+3. [GitHub Actions CI/CD Pipeline](#github-actions-cicd-pipeline)
+4. [Test Flow](#test-flow)
+5. [Defect Found](#defect-found)
+
+## Project Environment Setup
+
+The project uses dynamic environment files stored in the environment_configs directory. Each environment (e.g., dev, stg, prod) has its own configuration file that contains environment-specific values such as baseUrl.
+
+**Example of a configuration file (environment_configs/dev.json):**
+
+
+
+    {
+        "baseUrl": "https://demoblaze.com"
+    }
+
+
+**For production (environment_configs/prod.json):**
+    
+
+    
+    {
+     "baseUrl": "https://prod.example.com"
+    }
 
 ## Running the Tests Locally
 
@@ -25,7 +47,7 @@ To run the tests locally, follow these steps:
 
      ```bash
    npm install
-   npx cypress run
+   npx cypress run --env name="dev"
 
 
 ## GitHub Actions CI/CD Pipeline

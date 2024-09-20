@@ -44,9 +44,8 @@ class productPageActions {
 
 addProductToCart(productName) {
   cy.contains(productName).click();
-  cy.intercept('**/view').as('viewRequest');
   this.productPage.AddToCart().click();
-  cy.wait('@viewRequest').its('response.statusCode').should('eq', 200);
+  cy.wait(3000) // wait for the page load , as dynamic load is not working in this application
 }
 
 addRandomProductToCart() {

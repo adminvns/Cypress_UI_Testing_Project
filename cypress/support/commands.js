@@ -4,11 +4,9 @@ Cypress.Commands.add('clearAllProducts', () => {
       if (rowCount > 0) {
 
         for (let i = 0; i < rowCount - 1; i++) {
-          cy.get('tbody#tbodyid tr').first().find('a').click();
-          cy.wait(2000);
+          cy.get('tbody#tbodyid tr',{timeout:15000}).first().find('a').click();
         }
-        cy.get('tbody#tbodyid tr').first().find('a').click();
-        cy.wait(3000);
+        cy.get('tbody#tbodyid tr',{timeout:15000}).first().find('a').click();
       } else {
         cy.log('No products to delete.');
       }

@@ -25,6 +25,7 @@ jobs:
         with:
           spec: ${{ matrix.spec }}
           record: false
+          start: npx cypress run --env name=dev
 
       - name: Merge and Generate Report
         if: ${{ always() }}
